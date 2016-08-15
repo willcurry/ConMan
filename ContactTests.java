@@ -32,6 +32,21 @@ public class ContactTests {
     public void contactIsAddedToPublicListOfContactsAfterCreation() {
         Contact contact = new Contact("Will", "Curry", "07555555555", "will@emailsite.com");
         assertThat(ConsoleSearch.allContacts.get(0).lastName(), is("Curry"));
+    }
 
+    @Test
+    public void whenContactIsDeletedItIsRemovedFromAllContactsList() {
+        Contact contact = new Contact("Will", "Curry", "07555555555", "will@emailsite.com");
+        Contact contact1 = new Contact("Will", "Smith", "07555555555", "will@emailsite.com");
+        contact.delete(contact);
+        assertThat(ConsoleSearch.allContacts.get(0).lastName(), is("Smith"));
+    }
+
+    @Test
+    public void afterEditingContactFirstNameItIsUpdated() {
+        Contact contact = new Contact("Will", "Curry", "07555555555", "will@emailsite.com");
+        Contact contact1 = new Contact("Bob", "Curry", "07555555555", "will@emailsite.com");
+        contact.edit(contact, contact1);
+        assertThat(ConsoleSearch.allContacts.get(0).firstName(), is("Bob"));
     }
 }

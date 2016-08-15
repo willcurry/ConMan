@@ -16,6 +16,14 @@ public class Contact {
         ConsoleSearch.allContacts.add(contact);
     }
 
+    public void delete(Contact contact) {
+        ConsoleSearch.allContacts.remove(ConsoleSearch.allContacts.indexOf(contact));
+    }
+
+    public void edit(Contact contact, Contact updatedContact) {
+        ConsoleSearch.allContacts.set(ConsoleSearch.allContacts.indexOf(contact), updatedContact);
+    }
+
     public String firstName() {
         return firstName;
     }
