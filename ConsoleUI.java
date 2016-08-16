@@ -6,6 +6,12 @@ public class ConsoleUI implements UI {
     private final BufferedReader inputReader;
     private final Writer writer;
 
+    public ConsoleUI(InputStream stream, Writer writer) {
+        this.stream = stream;
+        this.writer = writer;
+        inputReader = new BufferedReader(new InputStreamReader(stream));
+    }
+
     @Override
     public void displayContactInfo(Contact contact) {
         print(contact.firstName() + " " + contact.lastName() + "\n");
@@ -22,6 +28,7 @@ public class ConsoleUI implements UI {
     @Override
     public String userInput() {
         try {
+            print(inputReader.readLine());
             return inputReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,12 +39,7 @@ public class ConsoleUI implements UI {
     @Override
     public void displayMenu(int size) {
         print("Hello, you have " + size + " contacts. \n");
-        print("Find one by searching any bit of their info! \n");    }
-
-    public ConsoleUI(InputStream stream, Writer writer) {
-        this.stream = stream;
-        this.writer = writer;
-        inputReader = new BufferedReader(new InputStreamReader(stream));
+        print("Find one by searching any bit of their info! \n");
     }
 
     public void print(String text) {

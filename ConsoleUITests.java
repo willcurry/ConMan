@@ -43,4 +43,10 @@ public class ConsoleUITests {
         assertThat(output.toString(), containsString("Smith"));
         assertThat(output.toString(), containsString("Curry"));
     }
+
+    @Test
+    public void userInputReturnsTheUsersInput() {
+        consoleUI.userInput();
+        assertThat(output.toString(), is("Will"));
+    }
 }
