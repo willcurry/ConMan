@@ -49,4 +49,13 @@ public class ConsoleUITests {
         consoleUI.userInput();
         assertThat(output.toString(), is("Will"));
     }
+
+    @Test
+    public void displayMenuDisplaysMenu() {
+        consoleUI.displayMenu(2);
+        assertThat(output.toString(), containsString("Hello, you have " + 2 + " contacts. \n"));
+        for (Operations operation : Operations.values()) {
+            assertThat(output.toString(), containsString(operation + operation.description()));
+        }
+    }
 }

@@ -1,3 +1,5 @@
+import com.sun.tools.javac.code.Attribute;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -39,7 +41,11 @@ public class ConsoleUI implements UI {
     @Override
     public void displayMenu(int size) {
         print("Hello, you have " + size + " contacts. \n");
-        print("Find one by searching any bit of their info! \n");
+        print("What would you like to do?\n");
+        print("-----------------------------\n");
+        for (Operations operation : Operations.values()) {
+            print(operation + operation.description() + "\n");
+        }
     }
 
     public void print(String text) {
