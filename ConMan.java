@@ -22,26 +22,49 @@ public class ConMan {
         allContacts.set(allContacts.indexOf(contact), updatedContact);
     }
 
-    private void start() {
-        ui.displayMenu(allContacts.size());
-        ui.displayAllContacts(searchContacts());
-        String userInput = ui.userInput();
-        for (Contact contact : searchContacts()) {
-            if (userInput.contains(contact.firstName() + userInput.contains(contact.firstName()))) {
-                ui.displayContactInfo(contact);
-            }
-        }
-    }
-
     public ArrayList<Contact> searchContacts() {
-        ArrayList<Contact> contacts = new ArrayList<>();
         String nextSearch = ui.userInput();
+        ArrayList<Contact> contacts = new ArrayList<>();
         for (Contact contact : allContacts) {
             if (contact.firstName().contains(nextSearch) || contact.lastName().contains(nextSearch) || contact.email().contains(nextSearch)) {
                 contacts.add(contact);
             }
         }
         return contacts;
+    }
+
+    private void start() {
+        ui.displayMenu(allContacts.size());
+        String userInput = ui.userInput();
+        for (Operations operation : Operations.values()) {
+            if (userInput.equals(operation.toString().toLowerCase()) || userInput.equals(operation.toString().toUpperCase())) {
+                performOperation(operation.toString().toLowerCase());
+            }
+        }
+    }
+
+    public void performOperation(String operation) {
+        if (operation.equals("search")) {
+            searchContacts();
+        } else if (operation.equals("delete")) {
+            Contact contact = userPickContact();
+            delete(contact);
+        } else if (operation.equals("add")) {
+            Contact contact = userPickContact();
+            add(contact);
+        } else if (operation.equals("edit")) {
+
+        }
+    }
+
+    private Contact userPickContact() {
+        ui.displayAllContacts(allContacts);
+        for (Contact contact : allContacts) {
+            if (ui.userInput().contains(contact.firstName()) || ui.userInput().contains(contact.firstName())) {
+                return contact;
+            }
+        }
+        return userPickContact();
     }
 
     public static void main(String[] args) {

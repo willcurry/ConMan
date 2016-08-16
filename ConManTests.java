@@ -17,7 +17,7 @@ public class ConManTests {
 
     @Before
     public void setUp() {
-        stream = new ByteArrayInputStream("Will".getBytes());
+        stream = new ByteArrayInputStream("Will\nWill".getBytes());
         writer = new PrintWriter(System.out);
         consoleUI = new ConsoleUI(stream, writer);
         conMan = new ConMan(consoleUI);
@@ -43,5 +43,15 @@ public class ConManTests {
         for (Contact will : conMan.searchContacts()) {
             assertThat(will.firstName(), is("Will"));
         }
+    }
+
+    @Test
+    public void whenPerfromOperationIsCalledWithDeleteItDeletesTheContactChosen() {
+        Contact contact = new Contact("Will", "Curry", "07555555555", "will@emailsite.com");
+        Contact contact2 = new Contact("Billy", "Smith", "07555555556", "billy@emailsite.com");
+        conMan.add(contact);
+        conMan.add(contact2);
+        conMan.performOperation("delete");
+        assertThat(conMan.allContacts.size(), is(1));
     }
 }

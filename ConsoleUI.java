@@ -22,6 +22,7 @@ public class ConsoleUI implements UI {
 
     @Override
     public void displayAllContacts(ArrayList<Contact> contacts) {
+        print("Who do want to perform this action on? \n");
         for (Contact contact : contacts) {
             print(contact.firstName() + " " + contact.lastName() + "\n");
         }
