@@ -8,6 +8,7 @@ import java.io.Writer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class ConManTests {
 
@@ -16,7 +17,7 @@ public class ConManTests {
     }
 
     @Test
-    public void searchingFirstNameReturnsContactWithThatFirstName() {
+    public void listOfContactsHoldsAddedContact() {
         InputStream stream = new ByteArrayInputStream("Will\nWill".getBytes());
         Writer writer = new PrintWriter(System.out);
         ConsoleUI consoleUI = new ConsoleUI(stream, writer);
@@ -61,10 +62,13 @@ public class ConManTests {
 
     @Test
     public void userCanSelectAContactFromTheListOfContacts() {
-        InputStream stream = new ByteArrayInputStream("Will\nWill".getBytes());
+        InputStream stream = new ByteArrayInputStream("Will".getBytes());
         Writer writer = new PrintWriter(System.out);
         ConsoleUI consoleUI = new ConsoleUI(stream, writer);
         ConMan conMan = new ConMan(consoleUI);
+        Contact contact = new Contact("Will", "Curry", "07555555555", "will@emailsite.com");
+        conMan.add(contact);
+        assertThat(conMan.userPickContact(), is(contact));
     }
 
     @Test
@@ -76,6 +80,19 @@ public class ConManTests {
         Contact contact = new Contact("Billy", "Smith", "07555555556", "billy@emailsite.com");
         conMan.add(contact);
         conMan.performOperation("edit");
+        assertThat(conMan.allContacts.get(0).firstName(), is("Will"));
+        assertThat(conMan.allContacts.get(0).lastName(), is("Curry"));
+        assertThat(conMan.allContacts.get(0).telephone(), is("telephone"));
+        assertThat(conMan.allContacts.get(0).email(), is("email"));
+    }
+
+    @Test
+    public void whenPerformOperationIsCalledWithAddTheUserCanAddACustomContact() {
+        InputStream stream = new ByteArrayInputStream("Will\nCurry\ntelephone\nemail".getBytes());
+        Writer writer = new PrintWriter(System.out);
+        ConsoleUI consoleUI = new ConsoleUI(stream, writer);
+        ConMan conMan = new ConMan(consoleUI);
+        conMan.performOperation("add");
         assertThat(conMan.allContacts.get(0).firstName(), is("Will"));
         assertThat(conMan.allContacts.get(0).lastName(), is("Curry"));
         assertThat(conMan.allContacts.get(0).telephone(), is("telephone"));

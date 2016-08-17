@@ -6,4 +6,5 @@ public interface UI {
     String userInput();
     void displayMenu(int size);
     void requestNewContactInformation();
+    void clearConsole();
 }

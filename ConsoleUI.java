@@ -38,12 +38,13 @@ public class ConsoleUI implements UI {
 
     @Override
     public void displayMenu(int size) {
-        print("Hello, you have " + size + " contacts.");
-        print("What would you like to do?");
-        print("-----------------------------");
+        print("\033[31m" + "\033[0;1m" + "Hello, you have " + "\033[33m" + "\033[0;1m" + size + "\033[31m" + "\033[0;1m" + " contacts.");
+        print("\033[31m" + "What would you like to do?");
+        print("\033[35m" + "-----------------------------");
         for (Operations operation : Operations.values()) {
-            print(operation + operation.description());
+            print("\033[36m" + operation + "\033[34m" + operation.description());
         }
+        print("\033[35m" + "-----------------------------");
     }
 
     @Override
@@ -52,6 +53,16 @@ public class ConsoleUI implements UI {
         print("New last name:");
         print("New telephone number:");
         print("New email:");
+    }
+
+    @Override
+    public void clearConsole() {
+        try {
+            writer.write("\033[H\033[2J");
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void print(String text) {

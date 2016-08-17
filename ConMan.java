@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ConMan {
     }
 
     private void start() {
+        ui.clearConsole();
         ui.displayMenu(allContacts.size());
         String userInput = ui.userInput();
         for (Operations operation : Operations.values()) {
@@ -45,12 +47,18 @@ public class ConMan {
 
     public void performOperation(String operation) {
         if (operation.equals("search")) {
+            ui.clearConsole();
             searchContacts();
         } else if (operation.equals("delete")) {
+            ui.clearConsole();
             Contact contact = userPickContact();
             delete(contact);
         } else if (operation.equals("add")) {
+            ui.clearConsole();
+            Contact contact = userEditedContact();
+            add(contact);
         } else if (operation.equals("edit")) {
+            ui.clearConsole();
             Contact contact = userPickContact();
             Contact contact2 = userEditedContact();
             edit(contact, contact2);
@@ -62,11 +70,12 @@ public class ConMan {
         return new Contact(ui.userInput(), ui.userInput(), ui.userInput(), ui.userInput());
     }
 
-    private Contact userPickContact() {
+    public Contact userPickContact() {
         ui.displayAllContacts(allContacts);
         String search = ui.userInput();
         for (Contact contact : allContacts) {
             if (search.contains(contact.firstName()) || search.contains(contact.firstName())) {
+                ui.displayContactInfo(contact);
                 return contact;
             }
         }
