@@ -5,4 +5,5 @@ public interface UI {
     void displayAllContacts(ArrayList<Contact> contacts);
     String userInput();
     void displayMenu(int size);
+    void requestNewContactInformation();
 }

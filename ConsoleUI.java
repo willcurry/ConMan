@@ -1,5 +1,3 @@
-import com.sun.tools.javac.code.Attribute;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -16,22 +14,21 @@ public class ConsoleUI implements UI {
 
     @Override
     public void displayContactInfo(Contact contact) {
-        print(contact.firstName() + " " + contact.lastName() + "\n");
-        print(contact.telephone() + " " + contact.email() + "\n");
+        print(contact.firstName() + " " + contact.lastName());
+        print(contact.telephone() + " " + contact.email());
     }
 
     @Override
     public void displayAllContacts(ArrayList<Contact> contacts) {
-        print("Who do want to perform this action on? \n");
+        print("Who do want to perform this action on?");
         for (Contact contact : contacts) {
-            print(contact.firstName() + " " + contact.lastName() + "\n");
+            print(contact.firstName() + " " + contact.lastName());
         }
     }
 
     @Override
     public String userInput() {
         try {
-            print(inputReader.readLine());
             return inputReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,17 +38,25 @@ public class ConsoleUI implements UI {
 
     @Override
     public void displayMenu(int size) {
-        print("Hello, you have " + size + " contacts. \n");
-        print("What would you like to do?\n");
-        print("-----------------------------\n");
+        print("Hello, you have " + size + " contacts.");
+        print("What would you like to do?");
+        print("-----------------------------");
         for (Operations operation : Operations.values()) {
-            print(operation + operation.description() + "\n");
+            print(operation + operation.description());
         }
+    }
+
+    @Override
+    public void requestNewContactInformation() {
+        print("New first name:");
+        print("New last name:");
+        print("New telephone number:");
+        print("New email:");
     }
 
     public void print(String text) {
         try {
-            writer.write(text);
+            writer.write(text + "\n");
             writer.flush();
         } catch (IOException ex) {
             ex.printStackTrace();

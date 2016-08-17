@@ -50,17 +50,23 @@ public class ConMan {
             Contact contact = userPickContact();
             delete(contact);
         } else if (operation.equals("add")) {
-            Contact contact = userPickContact();
-            add(contact);
         } else if (operation.equals("edit")) {
-
+            Contact contact = userPickContact();
+            Contact contact2 = userEditedContact();
+            edit(contact, contact2);
         }
+    }
+
+    private Contact userEditedContact() {
+        ui.requestNewContactInformation();
+        return new Contact(ui.userInput(), ui.userInput(), ui.userInput(), ui.userInput());
     }
 
     private Contact userPickContact() {
         ui.displayAllContacts(allContacts);
+        String search = ui.userInput();
         for (Contact contact : allContacts) {
-            if (ui.userInput().contains(contact.firstName()) || ui.userInput().contains(contact.firstName())) {
+            if (search.contains(contact.firstName()) || search.contains(contact.firstName())) {
                 return contact;
             }
         }
