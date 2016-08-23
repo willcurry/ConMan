@@ -45,24 +45,41 @@ public class ConMan {
         }
     }
 
+    public void shouldContinue() {
+        ui.userContinue();
+        if (ui.userInput().equals("ok")) {
+            start();
+        }
+    }
+
     public void performOperation(String operation) {
         if (operation.equals("search")) {
             ui.clearConsole();
-            searchContacts();
+            for (Contact contact : searchContacts()) {
+                ui.displayContactInfo(contact);
+            }
+            shouldContinue();
         } else if (operation.equals("delete")) {
             ui.clearConsole();
             Contact contact = userPickContact();
             delete(contact);
+            shouldContinue();
         } else if (operation.equals("add")) {
             ui.clearConsole();
             Contact contact = userEditedContact();
             add(contact);
+            shouldContinue();
         } else if (operation.equals("edit")) {
             ui.clearConsole();
             Contact contact = userPickContact();
             Contact contact2 = userEditedContact();
             edit(contact, contact2);
+            shouldContinue();
         }
+    }
+
+    public boolean isConManEnded() {
+        return ui.userInput().equals("end");
     }
 
     private Contact userEditedContact() {
@@ -75,7 +92,6 @@ public class ConMan {
         String search = ui.userInput();
         for (Contact contact : allContacts) {
             if (search.contains(contact.firstName()) || search.contains(contact.firstName())) {
-                ui.displayContactInfo(contact);
                 return contact;
             }
         }

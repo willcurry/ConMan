@@ -7,4 +7,5 @@ public interface UI {
     void displayMenu(int size);
     void requestNewContactInformation();
     void clearConsole();
+    void userContinue();
 }

@@ -14,8 +14,10 @@ public class ConsoleUI implements UI {
 
     @Override
     public void displayContactInfo(Contact contact) {
+        print("------------------");
         print(contact.firstName() + " " + contact.lastName());
         print(contact.telephone() + " " + contact.email());
+        print("------------------");
     }
 
     @Override
@@ -63,6 +65,10 @@ public class ConsoleUI implements UI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void userContinue() {
+        print("Type 'ok' to continue or 'end' to end!");
     }
 
     public void print(String text) {
