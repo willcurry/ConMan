@@ -22,7 +22,7 @@ public class ConMan {
 
     public void start() {
         Writer writer = new PrintWriter(System.out);
-        menu = new ConsoleMenu(commands(), stream, writer);
+        menu.addCommands(commands());
         menu.runMenu();
     }
 
