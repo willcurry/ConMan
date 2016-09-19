@@ -9,7 +9,6 @@ public class ConMan {
     private final InputStream stream;
     private ConsoleMenu menu;
     private ArrayList<Contact> allContacts = new ArrayList<>();
-    private final Quit quit = new Quit();
 
     public ConMan(ConsoleMenu consoleMenu, UI ui, InputStream stream) {
         this.menu = consoleMenu;
@@ -24,11 +23,7 @@ public class ConMan {
     public void start() {
         Writer writer = new PrintWriter(System.out);
         menu = new ConsoleMenu(commands(), stream, writer);
-        while (!quit.hasQuit()) {
-            ui.clearConsole();
-            menu.displayItems();
-            menu.userSelectCommand();
-        }
+        menu.runMenu();
     }
 
     public static void main(String[] args) {
@@ -45,7 +40,6 @@ public class ConMan {
         commands.add(new Add(ui, allContacts));
         commands.add(new Delete(ui, allContacts));
         commands.add(new Edit(ui, allContacts));
-        commands.add(quit);
         return commands;
     }
 }
