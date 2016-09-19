@@ -45,7 +45,8 @@ public class ConManTests {
     @Test
     public void canAddToListOfContacts() {
         buildConMan("Add");
-        conMan.start();
+        menu = new ConsoleMenu(conMan.commands(), stream, writer);
+        menu.userSelectCommand();
         assertThat(conMan.allContacts().get(0).firstName(), is("Will"));
     }
 
@@ -53,7 +54,8 @@ public class ConManTests {
     public void searchingFirstNameReturnsAllContactsWithThatFirstName() {
         buildConMan("Search");
         conMan.allContacts().add(will());
-        conMan.start();
+        menu = new ConsoleMenu(conMan.commands(), stream, writer);
+        menu.userSelectCommand();
         assertThat(output.toString(), containsString("Will Curry"));
     }
 
@@ -62,7 +64,8 @@ public class ConManTests {
         buildConMan("Delete");
         conMan.allContacts().add(billy());
         conMan.allContacts().add(will());
-        conMan.start();
+        menu = new ConsoleMenu(conMan.commands(), stream, writer);
+        menu.userSelectCommand();
         assertThat(conMan.allContacts().size(), is(1));
     }
 
@@ -70,7 +73,8 @@ public class ConManTests {
     public void editUpdatesTheContactInAllContactsList() {
         buildConMan("Edit");
         conMan.allContacts().add(will());
-        conMan.start();
+        menu = new ConsoleMenu(conMan.commands(), stream, writer);
+        menu.userSelectCommand();
         assertThat(conMan.allContacts().get(0).firstName(), is("Billy"));
     }
 }
