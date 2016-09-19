@@ -1,24 +1,24 @@
 import java.util.ArrayList;
 
-public class Delete implements MenuItem<ArrayList<Contact>>{
+public class Delete implements Command{
 
     private final String name = "Delete";
     private final UI ui;
+    private final ArrayList<Contact> contacts;
 
-    public Delete(UI ui) {
+    public Delete(UI ui, ArrayList<Contact> contacts) {
         this.ui = ui;
+        this.contacts = contacts;
+    }
+
+    @Override
+    public void execute() {
+        contacts.remove(contacts.indexOf(userPickContact(contacts)));
     }
 
     @Override
     public String name() {
         return name;
-    }
-
-    @Override
-    public ArrayList<Contact> execute(ArrayList<Contact> contacts) {
-        Contact contact = userPickContact(contacts);
-        if (contact != null) contacts.remove(contacts.indexOf(contact));
-        return contacts;
     }
 
     public Contact userPickContact(ArrayList<Contact> allContacts) {

@@ -1,12 +1,19 @@
 import java.util.ArrayList;
 
-public class Search implements MenuItem<ArrayList<Contact>> {
+public class Search implements Command {
 
     private final String name = "Search";
     private final UI ui;
+    private final ArrayList<Contact> contacts;
 
-    public Search(UI ui) {
+    public Search(UI ui, ArrayList<Contact> contacts) {
         this.ui = ui;
+        this.contacts = contacts;
+    }
+
+    @Override
+    public void execute() {
+        ui.displayAllContacts(searchContacts(ui.userInput(), contacts));
     }
 
     @Override
@@ -14,10 +21,6 @@ public class Search implements MenuItem<ArrayList<Contact>> {
         return name;
     }
 
-    @Override
-    public ArrayList<Contact> execute(ArrayList<Contact> contacts) {
-        return searchContacts(ui.userInput(), contacts);
-    }
 
     public ArrayList<Contact> searchContacts(String nextSearch, ArrayList<Contact> allContacts) {
         ArrayList<Contact> contacts = new ArrayList<>();

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 public class ConsoleUITests {
     private UI consoleUI;
     private ByteArrayInputStream stream;
-    private ConsoleMenu<ArrayList<Contact>> menu;
+    private ConsoleMenu menu;
     private ConMan conMan;
     private ByteArrayOutputStream output;
 
@@ -21,14 +21,13 @@ public class ConsoleUITests {
         output = new ByteArrayOutputStream();
         Writer writer = new PrintWriter(output);
         consoleUI = new ConsoleUI(stream, writer);
-        menu = new ConsoleMenu<ArrayList<Contact>>(menuItems(), stream, writer);
-        conMan = new ConMan(menu, consoleUI);
+        menu = new ConsoleMenu(commands(), stream, writer);
+        conMan = new ConMan(menu, consoleUI, stream);
     }
 
-    private ArrayList<MenuItem> menuItems() {
-        ArrayList<MenuItem> items = new ArrayList<>();
-        items.add(new Search(consoleUI));
-        items.add(new Add(consoleUI));
+    private ArrayList<Command> commands() {
+        ArrayList<Command> items = new ArrayList<>();
+        items.add(new Search(consoleUI, conMan.allContacts()));
         return items;
     }
 
@@ -53,8 +52,8 @@ public class ConsoleUITests {
     @Test
     public void displayAllContactsDisplaysEverySingleContactsFirstAndLastName() {
         Contact contact = new Contact("Bob", "Smith", "07333444333", "smith@ConMan.com");
-        conMan.allContacts.add(contact);
-        consoleUI.displayAllContacts(conMan.allContacts);
+        conMan.allContacts().add(contact);
+        consoleUI.displayAllContacts(conMan.allContacts());
         assertThat(output.toString(), containsString("Smith"));
     }
 }

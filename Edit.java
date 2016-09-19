@@ -1,25 +1,26 @@
 import java.util.ArrayList;
 
-public class Edit implements MenuItem<ArrayList<Contact>>{
+public class Edit implements Command{
 
     private final String name = "Edit";
     private final UI ui;
+    private final ArrayList<Contact> contacts;
 
-    public Edit(UI ui) {
+    public Edit(UI ui, ArrayList<Contact> contacts) {
         this.ui = ui;
+        this.contacts = contacts;
+    }
+
+    @Override
+    public void execute() {
+        Contact oldContact = userPickContact(contacts);
+        Contact updatedContact = updateContact();
+        contacts.set(contacts.indexOf(oldContact), updatedContact);
     }
 
     @Override
     public String name() {
         return name;
-    }
-
-    @Override
-    public ArrayList<Contact> execute(ArrayList<Contact> contacts) {
-        Contact contact = userPickContact(contacts);
-        Contact updatedContact = updateContact();
-        contacts.set(contacts.indexOf(contact), updatedContact);
-        return contacts;
     }
 
     private Contact updateContact() {
