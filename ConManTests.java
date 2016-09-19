@@ -39,7 +39,7 @@ public class ConManTests {
         writer = new PrintWriter(output);
         menu = new ConsoleMenu(new ArrayList<>(), stream, writer);
         consoleUI = new ConsoleUI(new ByteArrayInputStream("Will\nBilly".getBytes()), writer);
-        conMan = new ConMan(menu, consoleUI, stream);
+        conMan = new ConMan(menu, consoleUI);
     }
 
     @Test
