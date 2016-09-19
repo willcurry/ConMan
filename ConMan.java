@@ -1,4 +1,3 @@
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -6,14 +5,12 @@ import java.util.ArrayList;
 
 public class ConMan {
     private final UI ui;
-    private final InputStream stream;
     private ConsoleMenu menu;
     private ArrayList<Contact> allContacts = new ArrayList<>();
 
-    public ConMan(ConsoleMenu consoleMenu, UI ui, InputStream stream) {
+    public ConMan(ConsoleMenu consoleMenu, UI ui) {
         this.menu = consoleMenu;
         this.ui = ui;
-        this.stream = stream;
     }
 
     public ArrayList<Contact> allContacts() {
@@ -21,7 +18,6 @@ public class ConMan {
     }
 
     public void start() {
-        Writer writer = new PrintWriter(System.out);
         menu.addCommands(commands());
         menu.runMenu();
     }
@@ -30,7 +26,7 @@ public class ConMan {
         Writer writer = new PrintWriter(System.out);
         ConsoleMenu consoleMenu = new ConsoleMenu(new ArrayList<>(), System.in, writer);
         UI ui = new ConsoleUI(System.in, writer);
-        ConMan conMan = new ConMan(consoleMenu, ui, System.in);
+        ConMan conMan = new ConMan(consoleMenu, ui);
         conMan.start();
     }
 
