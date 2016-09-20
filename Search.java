@@ -21,7 +21,6 @@ public class Search implements Command {
         return name;
     }
 
-
     public ArrayList<Contact> searchContacts(String nextSearch, ArrayList<Contact> allContacts) {
         ArrayList<Contact> contacts = new ArrayList<>();
         for (Contact contact : allContacts) {
