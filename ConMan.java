@@ -17,7 +17,7 @@ public class ConMan {
         return allContacts;
     }
 
-    public void start() {
+    private void start() {
         menu.addCommands(commands());
         menu.runMenu();
     }
@@ -30,7 +30,7 @@ public class ConMan {
         conMan.start();
     }
 
-    public ArrayList<Command> commands() {
+    private ArrayList<Command> commands() {
         ArrayList<Command> commands = new ArrayList<>();
         commands.add(new Search(ui, allContacts));
         commands.add(new Add(ui, allContacts));

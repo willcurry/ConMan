@@ -21,13 +21,19 @@ public class Search implements Command {
         return name;
     }
 
-    public ArrayList<Contact> searchContacts(String nextSearch, ArrayList<Contact> allContacts) {
+    private ArrayList<Contact> searchContacts(String nextSearch, ArrayList<Contact> allContacts) {
         ArrayList<Contact> contacts = new ArrayList<>();
         for (Contact contact : allContacts) {
-            if (contact.firstName().contains(nextSearch) || contact.lastName().contains(nextSearch) || contact.email().contains(nextSearch)) {
+            if (isMatch(contact, nextSearch)) {
                 contacts.add(contact);
             }
         }
         return contacts;
+    }
+
+    private boolean isMatch(Contact contact, String nextSearch) {
+        return contact.firstName().contains(nextSearch) ||
+                contact.lastName().contains(nextSearch) ||
+                contact.email().contains(nextSearch);
     }
 }

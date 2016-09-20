@@ -21,7 +21,7 @@ public class Delete implements Command{
         return name;
     }
 
-    public Contact userPickContact(ArrayList<Contact> allContacts) {
+    private Contact userPickContact(ArrayList<Contact> allContacts) {
         ui.displayAllContacts(allContacts);
         String search = ui.userInput();
         for (Contact contact : allContacts) {

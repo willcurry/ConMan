@@ -28,7 +28,7 @@ public class Edit implements Command{
         return new Contact(ui.userInput(), ui.userInput(), ui.userInput(), ui.userInput());
     }
 
-    public Contact userPickContact(ArrayList<Contact> allContacts) {
+    private Contact userPickContact(ArrayList<Contact> allContacts) {
         ui.displayAllContacts(allContacts);
         String search = ui.userInput();
         for (Contact contact : allContacts) {
