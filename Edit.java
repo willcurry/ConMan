@@ -13,9 +13,7 @@ public class Edit implements Command{
 
     @Override
     public void execute() {
-        Contact oldContact = userPickContact(contacts);
-        Contact updatedContact = updateContact();
-        contacts.set(contacts.indexOf(oldContact), updatedContact);
+        contacts.set(contacts.indexOf(userPickContact(contacts)), updateContact());
     }
 
     @Override
