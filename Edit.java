@@ -1,12 +1,19 @@
 import java.util.ArrayList;
 
-public class Edit implements MenuItem<ArrayList<Contact>>{
+public class Edit implements Command{
 
     private final String name = "Edit";
     private final UI ui;
+    private final ArrayList<Contact> contacts;
 
-    public Edit(UI ui) {
+    public Edit(UI ui, ArrayList<Contact> contacts) {
         this.ui = ui;
+        this.contacts = contacts;
+    }
+
+    @Override
+    public void execute() {
+        contacts.set(contacts.indexOf(userPickContact(contacts)), updateContact());
     }
 
     @Override
@@ -14,20 +21,12 @@ public class Edit implements MenuItem<ArrayList<Contact>>{
         return name;
     }
 
-    @Override
-    public ArrayList<Contact> execute(ArrayList<Contact> contacts) {
-        Contact contact = userPickContact(contacts);
-        Contact updatedContact = updateContact();
-        contacts.set(contacts.indexOf(contact), updatedContact);
-        return contacts;
-    }
-
     private Contact updateContact() {
         ui.requestNewContactInformation();
         return new Contact(ui.userInput(), ui.userInput(), ui.userInput(), ui.userInput());
     }
 
-    public Contact userPickContact(ArrayList<Contact> allContacts) {
+    private Contact userPickContact(ArrayList<Contact> allContacts) {
         ui.displayAllContacts(allContacts);
         String search = ui.userInput();
         for (Contact contact : allContacts) {

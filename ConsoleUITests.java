@@ -11,50 +11,42 @@ import static org.junit.Assert.assertThat;
 public class ConsoleUITests {
     private UI consoleUI;
     private ByteArrayInputStream stream;
-    private ConsoleMenu<ArrayList<Contact>> menu;
+    private ConsoleMenu menu;
     private ConMan conMan;
+    private Writer writer;
     private ByteArrayOutputStream output;
 
     @Before
     public void setUp() {
-        stream = new ByteArrayInputStream("Will".getBytes());
-        output = new ByteArrayOutputStream();
-        Writer writer = new PrintWriter(output);
-        consoleUI = new ConsoleUI(stream, writer);
-        menu = new ConsoleMenu<ArrayList<Contact>>(menuItems(), stream, writer);
-        conMan = new ConMan(menu, consoleUI);
-    }
-
-    private ArrayList<MenuItem> menuItems() {
-        ArrayList<MenuItem> items = new ArrayList<>();
-        items.add(new Search(consoleUI));
-        items.add(new Add(consoleUI));
-        return items;
+        buildConMan("");
     }
 
     private Contact billy() {
-         return new Contact("Billy", "Smith", "07555555556", "billy@emailsite.com");
+        return new Contact("Billy", "Smith", "07555555556", "billy@emailsite.com");
     }
 
-    private Contact will() {
-         return new Contact("Will", "Curry", "07555555555", "will@emailsite.com");
+    private void buildConMan(String streamInfo) {
+        stream = new ByteArrayInputStream(streamInfo.getBytes());
+        output = new ByteArrayOutputStream();
+        writer = new PrintWriter(output);
+        menu = new ConsoleMenu(new ArrayList<>(), stream, writer);
+        consoleUI = new ConsoleUI(new ByteArrayInputStream("Will\nBilly".getBytes()), writer);
+        conMan = new ConMan(menu, consoleUI);
     }
 
     @Test
     public void displaysTheCorrectContactInformation() {
-        Contact contact = new Contact("Bob", "Smith", "07333444333", "smith@ConMan.com");
-        consoleUI.displayContactInfo(contact);
+        consoleUI.displayContactInfo(billy());
         assertThat(output.toString(), containsString("Smith"));
-        assertThat(output.toString(), containsString("Bob"));
-        assertThat(output.toString(), containsString("07333444333"));
-        assertThat(output.toString(), containsString("smith@ConMan.com"));
+        assertThat(output.toString(), containsString("Billy"));
+        assertThat(output.toString(), containsString("billy@emailsite.com"));
+        assertThat(output.toString(), containsString("07555555556"));
     }
 
     @Test
     public void displayAllContactsDisplaysEverySingleContactsFirstAndLastName() {
-        Contact contact = new Contact("Bob", "Smith", "07333444333", "smith@ConMan.com");
-        conMan.allContacts.add(contact);
-        consoleUI.displayAllContacts(conMan.allContacts);
+        conMan.allContacts().add(billy());
+        consoleUI.displayAllContacts(conMan.allContacts());
         assertThat(output.toString(), containsString("Smith"));
     }
 }

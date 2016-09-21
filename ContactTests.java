@@ -10,17 +10,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class ContactTests {
-    private ConMan conMan;
-    private InputStream stream;
-    private Writer writer;
-    private ConsoleUI consoleUI;
-
-    @Before
-    public void setUp() throws Exception {
-        InputStream stream = new ByteArrayInputStream("Will".getBytes());
-        Writer writer = new PrintWriter(System.out);
-    }
-
     @Test
     public void contactHasCorrectFirstNameAfterCreation() {
         Contact contact = new Contact("Will", "Curry", "07555555555", "will@emailsite.com");

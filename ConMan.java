@@ -6,44 +6,20 @@ import java.util.ArrayList;
 public class ConMan {
     private final UI ui;
     private ConsoleMenu menu;
-    public ArrayList<Contact> allContacts = new ArrayList<>();
+    private ArrayList<Contact> allContacts = new ArrayList<>();
 
     public ConMan(ConsoleMenu consoleMenu, UI ui) {
         this.menu = consoleMenu;
         this.ui = ui;
-        //allContacts.add(new Contact("Will", "Curry", "Tele", "Email"));
     }
 
     public ArrayList<Contact> allContacts() {
         return allContacts;
     }
 
-    public void shouldContinue() {
-        ui.userContinue();
-        if (ui.userInput().equals("ok")) {
-            start();
-        }
-    }
-
     private void start() {
-        Writer writer = new PrintWriter(System.out);
-        menu = new ConsoleMenu(menuItems(), System.in, writer);
-        ui.clearConsole();
-        menu.displayItems();
-        userSelectItem();
-        start();
-    }
-
-    public ArrayList<Contact> userSelectItem() {
-        String input = ui.userInput();
-        ArrayList<MenuItem> items = menu.getItems();
-        for (MenuItem item : items) {
-             if (input.equals(item.name())) {
-                 if (input.equals("Search")) ui.displayAllContacts(userSelectItem());
-                 allContacts = (ArrayList<Contact>) item.execute(allContacts);
-             }
-        }
-        return allContacts;
+        menu.addCommands(commands());
+        menu.runMenu();
     }
 
     public static void main(String[] args) {
@@ -54,11 +30,12 @@ public class ConMan {
         conMan.start();
     }
 
-    private ArrayList<MenuItem> menuItems() {
-        ArrayList<MenuItem> items = new ArrayList<>();
-        items.add(new Search(ui));
-        items.add(new Add(ui));
-        items.add(new Delete(ui));
-        return items;
+    private ArrayList<Command> commands() {
+        ArrayList<Command> commands = new ArrayList<>();
+        commands.add(new Search(ui, allContacts));
+        commands.add(new Add(ui, allContacts));
+        commands.add(new Delete(ui, allContacts));
+        commands.add(new Edit(ui, allContacts));
+        return commands;
     }
 }
